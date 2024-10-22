@@ -6,7 +6,7 @@ Date: May 14, 2023
 """
 
 # SETTINGS
-HOME_DIR = "./"
+HOME_DIR = "."
 
 EPOCH = 20
 BATCH_SIZE = 32
