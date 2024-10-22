@@ -12,7 +12,6 @@ import cv2
 import keras.backend as backend
 from config import config
 from PIL import Image, ImageDraw
-from utils.polygon_gen import generate_polygon
 
 
 def read_img(path):
