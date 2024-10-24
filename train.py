@@ -6,7 +6,7 @@ Date: May 14, 2023
 """
 from config import config
 from utils.data_processing import create_gen_from_slices
-from utils.callbacks import EpochResults, LossPlot
+from utils.callbacks import EpochResults
 from utils.load_model import load_model
 import glob
 import time
@@ -46,8 +46,7 @@ def main():
         steps_per_epoch=train_step_len,
         validation_data=validation_data_gen,
         validation_steps=val_step_len,
-        callbacks=[EpochResults(),
-                   LossPlot()]
+        callbacks=[EpochResults()]
     )
 
 
