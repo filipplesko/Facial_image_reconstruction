@@ -18,8 +18,6 @@ import os
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Running defined models')
-    parser.add_argument('-t', action='store_true', dest="trained",
-                        help='Use pre-trained model', required=False, default=False)
     parser.add_argument('-c', action='store', dest='checkpoint',
                         help='Checkpoint folder', required=False, default=None)
     parser.add_argument('-e', action='store', dest='epoch_cnt',

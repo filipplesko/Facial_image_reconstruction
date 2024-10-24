@@ -40,7 +40,7 @@ cd Facial_image_reconstruction
 ### 2. Download the Dataset
 
 ```bash
-wget https://nextcloud.fit.vutbr.cz/s/JfbSBqzzzWZbqsJ/download/celeba.tar.gz -P ./dataset/celeba/
+wget https://nextcloud.fit.vutbr.cz/s/6GDFBo4ky24ZpeS/download/celeba.tar.gz -P ./dataset/celeba/
 cd ./dataset/celeba/
 tar --use-compress-program=pigz -xvf celeba.tar.gz
 rm -rf celeba.tar.gz
@@ -53,21 +53,45 @@ cd ../../
 pip install -r requirements.txt
 ```
 
-### 4. Training the Model
+### Training Process
 
-To train the GAN for facial reconstruction, run:
+The training process in this repository involves training a Generative Adversarial Network (GAN) to restore damaged facial images. The GAN is trained on a dataset of real (undamaged) images and corresponding damaged versions. The model learns to reconstruct the missing or damaged parts of the face. The training can be done from scratch or continued from a saved checkpoint.
+
+#### To train the model from scratch, use:
 
 ```bash
-python train.py --dataset /path/to/celeba-c --epochs 100
+python train.py -e 20
 ```
 
-## Experiments
+#### To resume training from a checkpoint, use:
 
-### Performance Metrics
+```bash
+python train.py -c /path/to/checkpoint -e 20
+```
 
-The following metrics are used to evaluate the reconstruction quality:
-- **PSNR (Peak Signal-to-Noise Ratio)**
-- **SSIM (Structural Similarity Index)**
+#### Options:
+- `-c`: Path to the checkpoint folder (optional). If omitted, training starts from scratch.
+- `-e`: Number of epochs to train (default is 20).
+
+During training, the model processes batches of real and damaged images, and validation is performed on a separate dataset. Epoch results and loss plots are generated as callbacks.
+
+### Inpainting Process
+
+The inpainting process in this repository utilizes a GAN model to restore damaged facial images. The script takes as input a source image (with or without a mask), aligns the face, and checks for proper yaw rotation. If no mask is provided, a custom damage mask is generated. The damaged image is then passed through the GAN model, which reconstructs the missing parts of the face, enhancing its quality and structure.
+
+#### To perform inpainting on a set of images, run the following command:
+
+```bash
+python inpaint.py -c /path/to/checkpoint -s /path/to/source_images -m /path/to/mask_images -o /path/to/output_dir
+```
+
+#### Options:
+- `-c`: Path to the checkpoint folder containing the trained model.
+- `-s`: Path to the source images (single file or directory).
+- `-m`: Path to the mask images (optional; single file or directory). If not provided, a mask is generated automatically.
+- `-o`: Output directory where the results will be saved.
+
+
 
 ### Reconstruction Results
 
@@ -77,13 +101,9 @@ A comparison of different architectures is included in the paper. Our model demo
 
 The face recognition accuracy is evaluated using **ArcFace**, **SFace**, and **QMagFace** algorithms on both the original and reconstructed CelebA-C datasets.
 
-## Installation
+### This repository specifics
 
-Ensure you have Python 3.x installed. Then install the necessary dependencies:
-
-```bash
-pip install -r requirements.txt
-```
+This repository, in compare to paper, uses only frontal images up to 20 degrees yaw rotation for training.
 
 ## Citations
 
