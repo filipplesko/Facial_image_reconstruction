@@ -211,7 +211,7 @@ def create_custom_damage(img):
     return mask_image
 
 
-def check_mask_format(mask_img):
+def check_mask_format(image):
     mask_array = np.array(mask_img)
 
     if image.mode == 'RGBA':
