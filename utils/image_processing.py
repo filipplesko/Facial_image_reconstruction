@@ -151,7 +151,7 @@ def generate_noise_image(size):
     noise_b = np.array(Image.effect_noise(size, 35))
     noise = np.stack((noise_r, noise_g, noise_b), axis=2)
     noise_img = Image.fromarray(noise, mode='RGB')
-    return np.array(noise_img)
+    return noise_img
 
 
 # Function to create custom damage on the source image
@@ -214,6 +214,6 @@ def create_custom_damage(img):
 # Function to apply a mask to the image, replacing masked areas with noise
 def apply_mask_to_image(source_img, mask_img):
     noise_img = generate_noise_image(source_img.shape[:2])
-    mask_img = mask_img.convert('L')  # Convert to grayscale
-    damaged_img = Image.composite(Image.fromarray(noise_img), Image.fromarray(source_img), mask_img)
+    # mask_img = mask_img.convert('L')  # Convert to grayscale
+    damaged_img = Image.composite(noise_img, Image.fromarray(source_img), mask_img)
     return np.array(damaged_img)
