@@ -108,9 +108,8 @@ def main():
 
             save_image(source_path, result_img, os.path.join(args.output, "inpainted"))
 
-            # If no mask was provided, save the combined image
-            if not mask_path:
-                save_image(os.path.basename(source_path), damaged_image, os.path.join(args.output, "damaged"))
+            # Save the combined image
+            save_image(os.path.basename(source_path), damaged_image, os.path.join(args.output, "damaged"))
 
             pbar.update(1)
 
