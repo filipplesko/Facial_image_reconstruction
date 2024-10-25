@@ -92,7 +92,7 @@ def main():
             if not mask_path:
                 mask_img = create_custom_damage(aligned_image)
                 mask_file_path = os.path.join(args.output, "mask", os.path.basename(source_path))
-                os.mkdir(mask_file_path, exist_ok=True)
+                os.makedirs(mask_file_path, exist_ok=True)
                 mask_img.save(mask_file_path)
             else:
                 mask_img = Image.open(mask_path)
