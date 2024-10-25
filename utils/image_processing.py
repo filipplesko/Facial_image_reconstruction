@@ -211,9 +211,43 @@ def create_custom_damage(img):
     return mask_image
 
 
+def check_mask_format(mask_img):
+    mask_array = np.array(mask_img)
+
+    if image.mode == 'RGBA':
+        # Find the channel with the mask data by checking the standard deviation
+        std_devs = mask_array[..., :4].std(axis=(0, 1))  # Check across RGBA channels
+        mask_channel = np.argmax(std_devs)  # Channel with the highest variation
+        
+        # Create RGBA array with 0 for RGB channels and the mask data in the A channel
+        processed_array = np.zeros(mask_array.shape, dtype=np.uint8)
+        processed_array[..., 3] = mask_array[..., mask_channel]  # Set alpha to mask channel data
+
+    elif image.mode == 'RGB':
+        # Identify the channel with the mask data by finding the highest standard deviation
+        std_devs = mask_array.std(axis=(0, 1))
+        mask_channel = np.argmax(std_devs)  # Likely mask channel with max std deviation
+        alpha_channel = mask_array[..., mask_channel]
+        
+        # Create RGBA array with 0 RGB channels and the mask in A channel
+        processed_array = np.zeros(mask_array.shape[:2] + (4,), dtype=np.uint8)
+        processed_array[..., 3] = alpha_channel  # Set alpha to mask data
+
+    elif image.mode == 'L':
+        # If grayscale, directly use this as the alpha channel
+        alpha_channel = mask_array
+        processed_array = np.zeros(mask_array.shape + (4,), dtype=np.uint8)
+        processed_array[..., 3] = alpha_channel
+
+    else:
+        raise ValueError("Unsupported image mode. Expected RGBA, RGB, or L.")
+
+    # Convert processed array back to RGBA image
+    return Image.fromarray(processed_array, mode='RGBA')
+
+
 # Function to apply a mask to the image, replacing masked areas with noise
 def apply_mask_to_image(source_img, mask_img):
     noise_img = generate_noise_image(source_img.shape[:2])
-    # mask_img = mask_img.convert('L')  # Convert to grayscale
     damaged_img = Image.composite(noise_img, Image.fromarray(source_img), mask_img)
     return np.array(damaged_img)

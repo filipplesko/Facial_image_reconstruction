@@ -6,7 +6,7 @@ Date: May 14, 2023
 """
 from config import config
 from utils.load_model import load_model
-from utils.image_processing import load_image, save_image, generate_noise_image, create_custom_damage, apply_mask_to_image, process_image
+from utils.image_processing import load_image, save_image, generate_noise_image, create_custom_damage, apply_mask_to_image, process_image, check_mask_format
 import numpy as np
 import argparse
 import os
@@ -96,6 +96,7 @@ def main():
                 mask_img.save(f"{mask_file_path}/{os.path.basename(source_path)}")
             else:
                 mask_img = Image.open(mask_path)
+                mask_img = check_mask_format(mask_img)
 
             damaged_image = apply_mask_to_image(aligned_image, mask_img)
 
