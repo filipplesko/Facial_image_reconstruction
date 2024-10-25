@@ -41,7 +41,7 @@ def calculate_yaw_rotation(landmarks, image_width, image_height):
     return yaw_angle
 
 # Function to align a single image based on the face landmarks
-def align_image(image, target_eye_height=85, desired_eye_dist=70.0):
+def align_image(image, target_eye_height=120, desired_eye_dist=70.0):
     initialize_face_mesh()  # Ensure that FaceMesh is initialized
 
     # Perform face landmark detection using MediaPipe
