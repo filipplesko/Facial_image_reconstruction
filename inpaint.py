@@ -91,7 +91,7 @@ def main():
             # If no mask is provided, create custom damage
             if not mask_path:
                 mask_img = create_custom_damage(aligned_image)
-                mask_file_path = os.path.join(args.output, "generated_mask_" + os.path.basename(source_path))
+                mask_file_path = os.path.join(args.output, "mask" + os.path.basename(source_path))
                 mask_img.save(mask_file_path)
             else:
                 mask_img = Image.open(mask_path)
@@ -104,12 +104,11 @@ def main():
             result_img = np.squeeze(result) * 255.0
             result_img = result_img.astype(np.uint8)
 
-            save_image(source_path, result_img, args.output)
+            save_image(source_path, result_img, os.path.join(args.output, "inpainted"))
 
             # If no mask was provided, save the combined image
             if not mask_path:
-                combined_image_path = os.path.join(args.output, "combined_" + os.path.basename(source_path))
-                save_image(combined_image_path, damaged_image, args.output)
+                save_image(os.path.basename(source_path), damaged_image, os.path.join(args.output, "damaged"))
 
             pbar.update(1)
 
