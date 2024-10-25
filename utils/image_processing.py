@@ -212,7 +212,7 @@ def create_custom_damage(img):
 
 
 def check_mask_format(image):
-    mask_array = np.array(mask_img)
+    mask_array = np.array(image)
 
     if image.mode == 'RGBA':
         # Find the channel with the mask data by checking the standard deviation
