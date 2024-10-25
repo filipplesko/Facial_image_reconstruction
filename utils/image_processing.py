@@ -43,10 +43,9 @@ def calculate_yaw_rotation(landmarks, image_width, image_height):
 # Function to align a single image based on the face landmarks
 def align_image(image, target_eye_height=85, desired_eye_dist=70.0):
     initialize_face_mesh()  # Ensure that FaceMesh is initialized
-    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
     # Perform face landmark detection using MediaPipe
-    results = face_mesh.process(image_rgb)
+    results = face_mesh.process(image)
 
     if results.multi_face_landmarks:
         for face_landmarks in results.multi_face_landmarks:
@@ -103,11 +102,9 @@ def process_image(image, image_name, output_dir, target_eye_height=85, desired_e
     aligned_image = align_image(image, target_eye_height, desired_eye_dist)
 
     if aligned_image is not None:
-        # Step 2: Use the aligned image for yaw calculation
-        image_rgb = cv2.cvtColor(aligned_image, cv2.COLOR_BGR2RGB)
 
         # Perform face landmark detection again on the aligned image
-        results = face_mesh.process(image_rgb)
+        results = face_mesh.process(aligned_image)
 
         if results.multi_face_landmarks:
             for face_landmarks in results.multi_face_landmarks:
@@ -134,7 +131,8 @@ def process_image(image, image_name, output_dir, target_eye_height=85, desired_e
 
 # Function to load an image using OpenCV
 def load_image(image_path):
-    img = cv2.imread(image_path, cv2.IMREAD_COLOR)
+    img = cv2.imread(image_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     if img is None:
         raise ValueError(f"Error loading image: {image_path}")
     return img
