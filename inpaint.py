@@ -93,7 +93,6 @@ def main():
                 mask_img = create_custom_damage(aligned_image)
                 mask_file_path = os.path.join(args.output, "generated_mask_" + os.path.basename(source_path))
                 mask_img.save(mask_file_path)
-                print(f"Generated mask saved to {mask_file_path}")
             else:
                 mask_img = Image.open(mask_path)
 

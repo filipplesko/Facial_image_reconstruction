@@ -119,10 +119,8 @@ def process_image(image, image_name, output_dir, target_eye_height=85, desired_e
 
                 if abs(yaw_angle) <= 20:
                     # Save the aligned image to the specified output directory
-                    output_path = os.path.join(output_dir, 'aligned')
-                    os.makedirs(output_path, exist_ok=True)
-                    cv2.imwrite(f"{output_path}/{image_name}", aligned_image)
-                    print(f"Aligned image saved to {output_path}/{image_name}")
+                    os.makedirs(output_dir, exist_ok=True)
+                    cv2.imwrite(f"{output_dir}/aligned_{image_name}", aligned_image)
                     return aligned_image  # Return the aligned image for further processing
                 else:
                     print(f"Image '{image_name}' has too much yaw (not a frontal face). Yaw: {yaw_angle}")
@@ -147,7 +145,6 @@ def save_image(image_path, image, output_dir):
     image_bgr = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     output_path = os.path.join(output_dir, os.path.basename(image_path))
     cv2.imwrite(output_path, image_bgr)
-    print(f"Result saved to {output_path}")
 
 
 # Function to generate a noise image of the same size as the source image
