@@ -97,9 +97,9 @@ def align_image(image, target_eye_height=120, desired_eye_dist=70.0):
         return None
 
 # Function to process an image, align it, and then calculate the yaw angle based on the aligned image
-def process_image(image, image_name, output_dir, target_eye_height=85, desired_eye_dist=70.0):
+def process_image(image, image_name, output_dir, target_eye_height=120, desired_eye_dist=70.0):
     # Step 1: Align the image
-    aligned_image = align_image(image, target_eye_height, desired_eye_dist)
+    aligned_image = align_image(image)
 
     if aligned_image is not None:
 
