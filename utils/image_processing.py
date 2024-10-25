@@ -116,7 +116,7 @@ def process_image(image, image_name, output_dir, target_eye_height=85, desired_e
 
                 if abs(yaw_angle) <= 20:
                     # Save the aligned image to the specified output directory
-                    save_image(image_name, align_image, os.path.join(output_dir, "aligned"))
+                    save_image(image_name, aligned_image, os.path.join(output_dir, "aligned"))
                     return aligned_image  # Return the aligned image for further processing
                 else:
                     print(f"Image '{image_name}' has too much yaw (not a frontal face). Yaw: {yaw_angle}")
