@@ -28,7 +28,8 @@ def parse_args():
 def main():
     args = parse_args()
 
-    config.EPOCH = args.epoch_cnt
+    if args.epoch_cnt is not None:
+        config.EPOCH = args.epoch_cnt
 
     gan = load_model(args.checkpoint)
 

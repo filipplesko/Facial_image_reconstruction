@@ -51,7 +51,7 @@ def load_model(ckpt):
     if ckpt is not None:
         print(f"Loading checkpoint...")
         model_path = glob.glob(
-            f"{config.HOME_DIR}/output/checkpoints/ep_{ckpt}*"
+            f"{ckpt}"
         )[0]
         gan.load_weights(model_path)
         print("Checkpoint loaded")

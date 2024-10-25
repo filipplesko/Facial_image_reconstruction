@@ -39,7 +39,7 @@ class EpochResults(Callback):
             img = read_img(f)
             imgs.append(img)
 
-        path = os.path.join(config.HOME_DIR, 'output', 'results', 'train', f"{epoch:02d}")
+        path = os.path.join(config.HOME_DIR, 'output', 'examples', f"{epoch:02d}")
         Path(path).mkdir(parents=True, exist_ok=True)
         out = self.model.generator(np.array(imgs))
         for i, generated_image in enumerate(out):
