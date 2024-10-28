@@ -32,7 +32,7 @@ def create_gen_from_slices(path_r, path_d):
 
     dataset = tf.data.Dataset.from_tensor_slices((train_images_paths_d, train_images_paths_r))
     dataset = dataset.map(preprocessing_slice, num_parallel_calls=tf.data.AUTOTUNE)
-    dataset = dataset.shuffle(4096, reshuffle_each_iteration=False, seed=42)
+    dataset = dataset.shuffle(4096, reshuffle_each_iteration=True, seed=42)
     dataset = dataset.batch(config.BATCH_SIZE, drop_remainder=True)
     dataset = dataset.prefetch(tf.data.AUTOTUNE)
     return dataset
