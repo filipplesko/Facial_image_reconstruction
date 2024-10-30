@@ -46,8 +46,18 @@ tar --use-compress-program=pigz -xvf celeba.tar.gz
 rm -rf celeba.tar.gz
 cd ../../
 ```
+### 3. Download model
+Model from paper:
+```bash
+wget https://nextcloud.fit.vutbr.cz/s/PjDfkXk6wq9ezo5/download/v_net_paper.h5 -P ./models/
+```
+Model from this repository:
+```bash
+wget https://nextcloud.fit.vutbr.cz/s/MojNHtq2rfyBzLk/download/v_net_repo.h5 -P ./models/
+```
 
-### 3. Install Dependencies
+
+### 4. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -66,7 +76,7 @@ python train.py -e 20
 #### To resume training from a checkpoint, use:
 
 ```bash
-python train.py -c /path/to/checkpoint -e 20
+python train.py -c /path/to/model.h5 -e 20
 ```
 
 #### Options:
@@ -82,7 +92,7 @@ The inpainting process in this repository utilizes a GAN model to restore damage
 #### To perform inpainting on a set of images, run the following command:
 
 ```bash
-python inpaint.py -c /path/to/checkpoint -s /path/to/source_images -m /path/to/mask_images -o /path/to/output_dir
+python inpaint.py -c /path/to/model.h5 -s /path/to/source_images -m /path/to/mask_images -o /path/to/output_dir
 ```
 
 #### Options:
@@ -103,11 +113,13 @@ The face recognition accuracy is evaluated using **ArcFace**, **SFace**, and **Q
 
 ### This repository specifics
 
-This repository, in compare to paper, uses only frontal images up to 20 degrees yaw rotation for training.
+This repository, in compare to paper, uses only frontal images up to 20 degrees yaw rotation for training.\
+In the original paper, we trained models on actively generating damage during the training process to enhance robustness. In this repository the damage masks are generated only once for each image to maintain consistency.
+
 
 ## Citations
 
-If you use this code or dataset in your research, please cite the following paper:
+If you use this code in your research, please cite the following paper:
 
 ```
 @INPROCEEDINGS{10346000,
